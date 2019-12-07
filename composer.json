@@ -1,0 +1,19 @@
+{
+    "name": "m1x0n/eventsauce-mongo-message-repository",
+    "description": "MongoDB storage implementation for messages",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "m1x0n",
+            "email": "mmorozovm@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "eventsauce/eventsauce": "^0.7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    }
+}
