@@ -1,4 +1,5 @@
 .idea/
 vendor/
+mongodata/
 composer.lock
 .phpunit.result.cache

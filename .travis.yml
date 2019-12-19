@@ -1,0 +1,24 @@
+language: php
+
+services:
+  - docker
+
+php:
+  - 7.2
+  - 7.3
+  - 7.4
+
+sudo: false
+
+install:
+  - travis_retry composer install
+
+before_script:
+  - docker-compose up -d
+  - nc -z -w30 localhost 27017
+
+script:
+  - vendor/bin/phpunit
+
+after_script:
+  - docker-compose down
