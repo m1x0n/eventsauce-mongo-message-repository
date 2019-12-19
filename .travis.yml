@@ -1,0 +1,24 @@
+os: linux
+
+language: php
+
+services:
+  - mongodb
+
+php:
+  - 7.2
+
+before_install:
+  - yes '' | pecl install -f mongodb
+
+install:
+  - travis_retry composer install
+
+before_script:
+  - sleep 15
+  - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+
+script:
+  - vendor/bin/phpcs
+  - vendor/bin/phpstan analyse
+  - vendor/bin/phpunit
