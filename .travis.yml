@@ -1,3 +1,5 @@
+os: linux
+
 language: php
 
 services:
@@ -9,6 +11,9 @@ php:
   - 7.4
 
 sudo: false
+
+before_install:
+  - yes '' | pecl install -f mongodb
 
 install:
   - travis_retry composer install
