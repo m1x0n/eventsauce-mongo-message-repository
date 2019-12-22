@@ -1,5 +1,5 @@
 ## eventsauce-mongo-message-repository [![Build Status](https://travis-ci.org/m1x0n/eventsauce-mongo-message-repository.svg?branch=master)](https://travis-ci.org/m1x0n/eventsauce-mongo-message-repository)
-MongoDB implementation for EventSauce message repository.
+MongoDB implementation for [EventSauce](https://eventsauce.io/) message [repository](https://eventsauce.io/docs/advanced/custom-repository/).
 
 ### Requirements
 
