@@ -20,7 +20,8 @@ install:
 
 before_script:
   - docker-compose up -d
-  - nc -z -w30 localhost 27017
+  - docker ps
+  - nc -z -w45 127.0.0.1 27017
 
 script:
   - vendor/bin/phpunit
