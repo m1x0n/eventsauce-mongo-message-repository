@@ -12,7 +12,7 @@ class DatabaseConnection
     public static function create(string $database): Database
     {
         $client = new Client(
-            'mongodb://127.0.0.1/',
+            'mongodb://localhost/',
             [
                 'username' => 'root',
                 'password' => 'example'
