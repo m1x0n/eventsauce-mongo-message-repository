@@ -11,13 +11,15 @@ class DatabaseConnection
 {
     public static function create(string $database): Database
     {
-        $client = new Client(
-            'mongodb://127.0.0.1/',
-            [
-                'username' => getenv('MONGODB_USER'),
-                'password' => getenv('MONGODB_PASSWORD')
-            ]
-        );
+        $client = getenv('TRAVIS')
+            ? new Client()
+            : new Client(
+                null,
+                [
+                    'username' => 'user',
+                    'password' => 'secret'
+                ]
+            );
 
         return $client->selectDatabase($database);
     }

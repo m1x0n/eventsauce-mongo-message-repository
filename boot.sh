@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# This script might be used for running test and local environment
+
 docker-compose up -d
 
 if ! nc -z -w30 localhost 27017

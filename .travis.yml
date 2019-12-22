@@ -19,7 +19,6 @@ before_script:
   - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
 
 script:
+  - vendor/bin/phpcs
+  - vendor/bin/phpstan analyse
   - vendor/bin/phpunit
-
-after_script:
-  - docker-compose down
