@@ -17,7 +17,7 @@ install:
 before_script:
   - mkdir -p mongodata
   - docker-compose up -d
-  - curl 127.0.0.1:27017
+  - sleep 30
   - nc -z -w30 127.0.0.1 27017
 
 script:
