@@ -7,10 +7,6 @@ services:
 
 php:
   - 7.2
-  - 7.3
-  - 7.4
-
-sudo: false
 
 before_install:
   - yes '' | pecl install -f mongodb
@@ -20,8 +16,9 @@ install:
 
 before_script:
   - docker-compose up -d
-  - docker ps
-  - nc -z -w45 127.0.0.1 27017
+  - which netcat
+  - which nc
+  - nc -z -w30 127.0.0.1 27017
 
 script:
   - vendor/bin/phpunit
