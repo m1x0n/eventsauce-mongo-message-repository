@@ -15,9 +15,8 @@ install:
   - travis_retry composer install
 
 before_script:
+  - mkdir -p mongodata
   - docker-compose up -d
-  - which netcat
-  - which nc
   - nc -z -w30 127.0.0.1 27017
 
 script:
