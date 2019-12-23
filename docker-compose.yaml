@@ -3,8 +3,8 @@ services:
   mongo:
     image: mongo:4.2
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: travis
+      MONGO_INITDB_ROOT_PASSWORD: test
       MONGO_INITDB_DATABASE: test
     volumes:
     - ./mongodata:/data/db

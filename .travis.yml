@@ -15,7 +15,8 @@ install:
   - travis_retry composer install
 
 before_script:
-  - sleep 30
+  - sleep 15
+  - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
 
 script:
   - vendor/bin/phpunit

@@ -14,8 +14,8 @@ class DatabaseConnection
         $client = new Client(
             'mongodb://127.0.0.1/',
             [
-                'username' => 'root',
-                'password' => 'example'
+                'username' => getenv('MONGODB_USER'),
+                'password' => getenv('MONGODB_PASSWORD')
             ]
         );
 
