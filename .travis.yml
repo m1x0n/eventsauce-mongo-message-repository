@@ -3,7 +3,7 @@ os: linux
 language: php
 
 services:
-  - docker
+  - mongodb
 
 php:
   - 7.2
@@ -15,10 +15,7 @@ install:
   - travis_retry composer install
 
 before_script:
-  - mkdir -p mongodata
-  - docker-compose up -d
   - sleep 30
-  - nc -z -w30 127.0.0.1 27017
 
 script:
   - vendor/bin/phpunit
