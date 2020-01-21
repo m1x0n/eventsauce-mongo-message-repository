@@ -14,7 +14,7 @@
         "php": "^7.2",
         "ext-json": "*",
         "ext-mongodb": "^1.6",
-        "eventsauce/eventsauce": "^0.7.1",
+        "eventsauce/eventsauce": "~0.7",
         "mongodb/mongodb": "^1.5",
         "ramsey/uuid": "^3.9"
     },
