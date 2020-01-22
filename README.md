@@ -49,6 +49,9 @@ $messageRepository = new \EventSauceExtensions\MongoDbMessageRepository(
     $eventsCollectionName
 );
 
+// MongoDbMessageSerializer also supports upcasting.
+// Upcasting is possible by passing upcaster itself as second argument 
+
 // This is mostly for example and can be replaced with MessageBus dispatcher like RabbitMQ.
 // See eventsauce/rabbitmq-bundle-bindings
 $messageDispatcher = new \EventSauce\EventSourcing\SynchronousMessageDispatcher();

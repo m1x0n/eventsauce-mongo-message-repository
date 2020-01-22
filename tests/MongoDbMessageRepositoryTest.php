@@ -132,4 +132,26 @@ class MongoDbMessageRepositoryTest extends TestCase
         $this->assertEquals($lastEventId, $messages[1]->header(Header::EVENT_ID));
         $this->assertEquals(5, $messages[1]->header(Header::AGGREGATE_ROOT_VERSION));
     }
+
+    public function testShouldUpcastEvents(): void
+    {
+        $this->repository = new MongoDbMessageRepository(
+            $this->database,
+            new MongoDbMessageSerializer(new ConstructingMessageSerializer(), new TestUpcaster()),
+            'events'
+        );
+
+        $aggregateRootId = UuidAggregateRootId::create();
+        $eventId = Uuid::uuid4()->toString();
+
+        $message = $this->decorator->decorate(new Message(new TestEvent(), [
+            Header::EVENT_ID          => $eventId,
+            Header::AGGREGATE_ROOT_ID => $aggregateRootId->toString(),
+            Header::AGGREGATE_ROOT_VERSION => 1,
+        ]));
+        $this->repository->persist($message);
+        $generator = $this->repository->retrieveAll($aggregateRootId);
+        $retrievedMessage = iterator_to_array($generator, false)[0];
+        $this->assertInstanceOf(UpcastedTestEvent::class, $retrievedMessage->event());
+    }
 }
