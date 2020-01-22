@@ -9,6 +9,7 @@ use EventSauce\EventSourcing\Message;
 use EventSauce\EventSourcing\PointInTime;
 use EventSauce\EventSourcing\Serialization\ConstructingMessageSerializer;
 use EventSauce\EventSourcing\Serialization\MessageSerializer;
+use EventSauce\EventSourcing\Upcasting\Upcaster;
 use Generator;
 use MongoDB\BSON\UTCDateTime;
 use Ramsey\Uuid\Uuid;
@@ -26,9 +27,17 @@ class MongoDbMessageSerializer implements MessageSerializer
      */
     private $serializer;
 
-    public function __construct(ConstructingMessageSerializer $serializer)
-    {
+    /**
+     * @var Upcaster
+     */
+    private $upcaster;
+
+    public function __construct(
+        ConstructingMessageSerializer $serializer,
+        ?Upcaster $upcaster = null
+    ) {
         $this->serializer = $serializer;
+        $this->upcaster = $upcaster ?: new NullUpcaster();
     }
 
     public function serializeMessage(Message $message): array
@@ -50,6 +59,16 @@ class MongoDbMessageSerializer implements MessageSerializer
 
     public function unserializePayload(array $payload): Generator
     {
-        return $this->serializer->unserializePayload($payload);
+        $payload[self::TIME_OF_RECORDING] = new UTCDateTime(
+            (PointInTime::fromString($payload['headers'][Header::TIME_OF_RECORDING]))->dateTime()
+        );
+
+        if ($this->upcaster->canUpcast($payload['headers'][Header::EVENT_TYPE], $payload)) {
+            foreach ($this->upcaster->upcast($payload) as $upcastedPayload) {
+                yield from $this->serializer->unserializePayload($upcastedPayload);
+            }
+        } else {
+            yield from $this->serializer->unserializePayload($payload);
+        }
     }
 }
